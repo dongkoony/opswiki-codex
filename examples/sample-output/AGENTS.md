@@ -1,39 +1,48 @@
 # AGENTS.md
 
 ## Project Context
-
-This example project operates cloud infrastructure and deployment workflows. OpsWiki notes are used as supporting context for DevOps, MLOps, Cloud, and SRE tasks.
+- Generated from OpsWiki notes in `examples/sample-obsidian-vault` for `sample-obsidian-vault`.
 
 ## Operational Rules
-
 - Separate confirmed facts from assumptions before proposing infrastructure, deployment, or incident actions.
-- Do not include secrets, credentials, account IDs, private keys, or personal access keys in commits, examples, or responses.
-- Treat namespace names, AWS accounts, regions, and service names in examples as placeholders unless source notes confirm them.
-- For incident work, begin with read-only diagnosis steps before state-changing commands.
-- For deployment work, include rollback and verification notes in the final response.
+- Begin incident work with read-only diagnosis before state-changing commands.
+- Treat example names, namespaces, accounts, regions, and service identifiers as placeholders unless source notes confirm them.
+- Do not include secrets, credentials, private keys, tokens, or personal access keys in commits or generated output.
 
 ## Verification Commands
 
-Run these only when the relevant toolchain exists in the project:
+```bash
+aws lambda get-function --function-name <function-name> --region <region>
+aws sts get-caller-identity
+```
+
+```bash
+whoami
+id
+docker version
+ls -l /var/run/docker.sock
+```
+
+```bash
+kubectl get pods -n <namespace>
+kubectl logs <pod> -n <namespace> --previous
+kubectl describe pod <pod> -n <namespace>
+kubectl get events -n <namespace> --sort-by=.lastTimestamp
+```
 
 ```bash
 terraform fmt -check -recursive
 terraform validate
 terraform plan
-kubectl config current-context
-kubectl get pods -n <namespace>
 ```
 
 ## Review Focus
-
-- Terraform: IAM scope, public ingress, encryption, state replacement, ownership tags.
-- Kubernetes: rollout status, pod events, probes, logs, service selectors, rollback path.
-- CI/CD: permissions, secrets, deployment gates, artifacts, Docker access, cache keys.
-- MLOps: model artifact version, feature schema compatibility, rollout metrics, rollback target.
+- Terraform and AWS: IAM scope, public ingress, state impact, and ownership tags.
+- Kubernetes: pod state, rollout status, probes, events, and rollback path.
+- CI/CD: credentials, Docker access, deployment gates, artifacts, and logs.
 
 ## Related OpsWiki Notes
-
 - [[AWS Lambda InvalidArn]]
-- [[Kubernetes CrashLoopBackOff]]
 - [[Jenkins Docker Permission Denied]]
+- [[Kubernetes CrashLoopBackOff]]
 - [[Terraform Security Group Review]]

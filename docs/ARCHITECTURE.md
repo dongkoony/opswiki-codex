@@ -27,20 +27,26 @@ AGENTS.md is the project-level instruction output. It should contain short opera
 
 Generated AGENTS.md content should be specific enough to guide Codex in a repository but short enough to remain maintainable.
 
-## Future Context Compilation
+## Script-Based Context Compilation
 
-Future versions can add scripts that compile selected notes into:
+The v0.2.0 exporter implements script-based context compilation through:
+
+```text
+scripts/opswiki_export_context.py
+```
+
+It compiles selected Markdown notes into:
 
 - source indexes
 - context briefs
 - AGENTS.md drafts
-- runbook seeds
-- review checklists
 
-These scripts should keep source paths, wikilinks, tags, assumptions, and verification steps visible in the output.
+The exporter keeps source paths, wikilinks, tags, assumptions, and verification steps visible in the output. It is deterministic, local-only, and does not execute commands found in notes.
+
+Future versions can extend this pattern for runbook seeds and review checklists.
 
 ## Future Optional MCP Integration
 
-An optional MCP server may later expose compiled context and runbook indexes to Codex. MCP should remain optional because the v0.1.0 plugin must work as a local instruction-only plugin.
+An optional MCP server may later expose compiled context and runbook indexes to Codex. MCP should remain optional because the plugin must continue to work as a local skills-and-scripts plugin.
 
 The MCP layer should not directly connect to production systems by default. Any future integration with cloud, cluster, CI/CD, or model registry systems should require explicit configuration and safe authentication boundaries.
