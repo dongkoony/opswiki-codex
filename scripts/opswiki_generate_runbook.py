@@ -246,7 +246,6 @@ def focus_matches(note: Note, focus: str | None) -> bool:
     haystack = " ".join(
         [note.path, note.title]
         + note.tags
-        + note.wikilinks
         + [key for key in note.sections]
         + [body for body in note.sections.values()]
     ).lower()
@@ -257,8 +256,7 @@ def order_notes(notes: list[Note], focus: str | None) -> list[Note]:
     if not focus:
         return notes
     focused = [note for note in notes if focus_matches(note, focus)]
-    remaining = [note for note in notes if note not in focused]
-    return focused + remaining
+    return focused or notes
 
 
 def build_runbook_draft(

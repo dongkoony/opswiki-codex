@@ -80,6 +80,57 @@ kubectl get pods -n <namespace>
         self.assertTrue(any("Confirm rollback" in item for item in draft.rollback_steps))
         self.assertTrue(draft.safety_checks)
 
+    def test_build_runbook_draft_uses_focused_notes_when_focus_matches(self):
+        generator = load_generator()
+        kubernetes_note = generator.parse_note(
+            Path("Kubernetes CrashLoopBackOff.md"),
+            """# Kubernetes CrashLoopBackOff
+
+Tags: #kubernetes
+
+## Symptom
+
+A pod reports `CrashLoopBackOff`.
+
+## Read-Only Checks
+
+```bash
+kubectl get pods -n <namespace>
+```
+""",
+        )
+        lambda_note = generator.parse_note(
+            Path("AWS Lambda InvalidArn.md"),
+            """# AWS Lambda InvalidArn
+
+Tags: #aws
+
+Related: [[Kubernetes CrashLoopBackOff]]
+
+## Symptoms
+
+- Lambda invocation fails with an `InvalidArn` style error.
+
+## Read-Only Checks
+
+```bash
+aws lambda get-function --function-name <function-name>
+```
+""",
+        )
+
+        draft = generator.build_runbook_draft(
+            [lambda_note, kubernetes_note],
+            title="Kubernetes CrashLoopBackOff",
+            service="Example service",
+            severity="SEV3",
+            focus="kubernetes",
+        )
+
+        self.assertIn("A pod reports `CrashLoopBackOff`.", "\n".join(draft.symptoms))
+        self.assertNotIn("InvalidArn", "\n".join(draft.symptoms))
+        self.assertEqual(draft.commands, ["kubectl get pods -n <namespace>"])
+
 
 class RunbookCliTests(unittest.TestCase):
     def test_sample_vault_generates_runbook_file(self):
