@@ -10,7 +10,7 @@ Implemented Markdown and Obsidian context exporter that can compile selected not
 
 ## v0.3.0
 
-Runbook generator scripts for turning structured notes and incident summaries into practical operational runbooks.
+Implemented local runbook generator for turning structured Markdown or Obsidian-style notes into practical operational runbooks.
 
 ## v0.4.0
 

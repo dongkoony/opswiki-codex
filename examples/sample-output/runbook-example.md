@@ -2,55 +2,68 @@
 
 ## Purpose
 
-Use this runbook when a Kubernetes workload repeatedly restarts and reports `CrashLoopBackOff`.
+- Use this runbook when `Kubernetes CrashLoopBackOff` appears in OpsWiki notes.
 
 ## Scope
 
-- In scope: pod startup failures, container logs, probes, configuration, and recent rollouts.
-- Out of scope: cluster-wide node outages unless pod events indicate scheduling or node pressure.
+- Service: sample-obsidian-vault
+- Severity: SEV3
+- Source: local Markdown or Obsidian-style operational notes.
 
 ## Symptoms
 
-- Pod status is `CrashLoopBackOff`.
-- Restart count increases.
-- Previous container logs show startup failure or early process exit.
+- A pod repeatedly starts and exits, then Kubernetes reports `CrashLoopBackOff`.
 
 ## Confirmed Facts
 
-- `kubectl logs --previous` can show the prior failed container execution.
-- Pod events can show probe failures, image issues, or volume mount errors.
-- Recent rollouts can introduce image, config, or dependency changes.
+- No confirmed facts were extracted from source notes.
 
 ## Assumptions
 
-- The namespace and deployment name must be confirmed before running commands.
-- Example command values are placeholders.
+- Confirm environment, namespace, account, region, and affected workload before running commands.
+
+## Safety Checks
+
+- Start with read-only diagnosis before state-changing commands.
+- Treat placeholder values such as `<namespace>` and `<pod>` as examples.
+- Commands are documentation only; do not execute them from this generated runbook.
 
 ## Diagnosis Steps
+
+- Collect logs, events, recent deployments, and ownership context before remediation.
+
+## Commands
+
+Commands are documentation only; do not execute them from this generated runbook.
 
 ```bash
 kubectl get pods -n <namespace>
 kubectl logs <pod> -n <namespace> --previous
 kubectl describe pod <pod> -n <namespace>
 kubectl get events -n <namespace> --sort-by=.lastTimestamp
-kubectl rollout status deployment/<deployment> -n <namespace>
 ```
 
 ## Resolution Steps
 
-1. Fix missing or invalid configuration when logs identify a config error.
-2. Adjust startup or probe settings when the app is healthy but probes fail too early.
-3. Roll back when the crash began immediately after a deployment.
+- Fix configuration first when logs show missing settings.
+- Roll back the deployment if the failure started immediately after a release.
+- Do not delete multiple pods before checking rollout history.
 
 ## Rollback
 
-```bash
-kubectl rollout undo deployment/<deployment> -n <namespace>
-```
+- Confirm rollback target, blast radius, and owner approval before changing state.
 
 ## Verification
 
-- Desired and ready replica counts match.
-- Restart count stops increasing.
-- Previous error no longer appears in logs.
-- Service endpoints exist when the workload backs a service.
+- Previous container logs show the startup failure.
+- Pod description shows restart count and probe failures.
+- The latest rollout references the intended image tag.
+
+## Escalation
+
+- Escalate to service owners when impact, ownership, or rollback safety is unclear.
+
+## Related Notes
+
+- Kubernetes CrashLoopBackOff
+- Jenkins Docker Permission Denied
