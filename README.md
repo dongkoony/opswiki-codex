@@ -2,7 +2,7 @@
 
 OpsWiki for Codex is a DevOps and MLOps-focused Codex plugin for turning Markdown or Obsidian-style operational notes into reusable agent context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.
 
-This v0.1.0 MVP is instruction-only. It provides Codex skills and Markdown references, not MCP servers, app integrations, or complex scripts.
+This v0.2.0 release provides Codex skills, Markdown references, and a local Markdown/Obsidian context exporter. It does not add MCP servers or app integrations.
 
 ## How It Is Different
 
@@ -18,7 +18,7 @@ OpsWiki for Codex is not a general LLM wiki plugin and is not only an Obsidian i
 
 ## Supported MVP Workflows
 
-- Convert Markdown or Obsidian notes into a Codex context brief.
+- Export Markdown or Obsidian notes into a Codex context brief.
 - Draft AGENTS.md guidance for DevOps/MLOps repositories.
 - Create and improve incident runbooks.
 - Review Terraform and AWS infrastructure changes.
@@ -44,6 +44,10 @@ opswiki-codex/
   examples/
     sample-obsidian-vault/
     sample-output/
+  scripts/
+    opswiki_export_context.py
+  tests/
+    test_opswiki_export_context.py
   docs/
     README.md
     ROADMAP.md
@@ -52,6 +56,21 @@ opswiki-codex/
 ```
 
 Each skill contains a `SKILL.md` file and focused Markdown references.
+
+## Markdown Context Exporter
+
+Use the v0.2.0 exporter to compile Markdown or Obsidian-style notes into reviewable Codex context outputs:
+
+```powershell
+uv run python scripts/opswiki_export_context.py --input examples/sample-obsidian-vault --output examples/sample-output --project-name sample-obsidian-vault
+```
+
+The exporter writes:
+
+- `context-brief.md`
+- `AGENTS.md`
+
+The script extracts note titles, tags, `[[wikilink]]` references, operational sections, and fenced shell commands. It preserves source paths and treats generated output as a draft for review.
 
 ## How To Use With Codex
 
@@ -76,10 +95,10 @@ Use Kubernetes Triage to investigate this CrashLoopBackOff.
 
 ## Current Limitations
 
-- No automatic Markdown or Obsidian vault ingestion yet.
+- No live Obsidian API integration.
 - No MCP server integration yet.
 - No app integration yet.
-- No static analysis scripts yet.
+- No Terraform, Kubernetes, or CI/CD static analysis helpers yet.
 - The plugin does not connect to cloud accounts, clusters, CI systems, or model registries.
 - Codex should treat examples as generic and safe placeholders.
 

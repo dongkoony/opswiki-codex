@@ -6,7 +6,7 @@ Instruction-only Codex plugin with DevOps/MLOps skills, focused references, samp
 
 ## v0.2.0
 
-Markdown and Obsidian context exporter that can compile selected notes into Codex-ready context briefs and AGENTS.md drafts.
+Implemented Markdown and Obsidian context exporter that can compile selected notes into Codex-ready context briefs and AGENTS.md drafts.
 
 ## v0.3.0
 
