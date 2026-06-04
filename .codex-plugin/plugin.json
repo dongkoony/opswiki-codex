@@ -1,0 +1,39 @@
+{
+  "name": "opswiki-codex",
+  "version": "0.1.0",
+  "description": "DevOps and MLOps runbook intelligence for Codex.",
+  "author": {
+    "name": "OpsWiki contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devops",
+    "mlops",
+    "sre",
+    "runbook",
+    "terraform",
+    "kubernetes",
+    "aws",
+    "ci-cd",
+    "obsidian",
+    "markdown"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpsWiki for Codex",
+    "shortDescription": "DevOps and MLOps runbook intelligence for Codex.",
+    "longDescription": "OpsWiki for Codex helps DevOps, MLOps, Cloud, and SRE engineers convert Markdown or Obsidian-style operational notes into reusable Codex context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.",
+    "developerName": "OpsWiki contributors",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Runbooks",
+      "Infrastructure Review"
+    ],
+    "defaultPrompt": [
+      "Turn these ops notes into Codex context.",
+      "Review this Terraform change with OpsWiki.",
+      "Help triage this Kubernetes incident."
+    ]
+  }
+}
