@@ -2,7 +2,7 @@
 
 OpsWiki for Codex is a DevOps and MLOps-focused Codex plugin for turning Markdown or Obsidian-style operational notes into reusable agent context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.
 
-This v0.2.0 release provides Codex skills, Markdown references, and a local Markdown/Obsidian context exporter. It does not add MCP servers or app integrations.
+This v0.3.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, and a local runbook generator. It does not add MCP servers or app integrations.
 
 ## How It Is Different
 
@@ -20,6 +20,7 @@ OpsWiki for Codex is not a general LLM wiki plugin and is not only an Obsidian i
 
 - Export Markdown or Obsidian notes into a Codex context brief.
 - Draft AGENTS.md guidance for DevOps/MLOps repositories.
+- Generate a focused operational runbook from structured notes.
 - Create and improve incident runbooks.
 - Review Terraform and AWS infrastructure changes.
 - Triage Kubernetes workload failures.
@@ -46,10 +47,11 @@ opswiki-codex/
     sample-output/
   scripts/
     opswiki_export_context.py
+    opswiki_generate_runbook.py
   tests/
     test_opswiki_export_context.py
+    test_opswiki_generate_runbook.py
   docs/
-    README.md
     ROADMAP.md
     ARCHITECTURE.md
     CONTRIBUTING.md
@@ -71,6 +73,20 @@ The exporter writes:
 - `AGENTS.md`
 
 The script extracts note titles, tags, `[[wikilink]]` references, operational sections, and fenced shell commands. It preserves source paths and treats generated output as a draft for review.
+
+## Runbook Generator
+
+Use the v0.3.0 generator to turn Markdown or Obsidian-style operational notes into a focused Markdown runbook:
+
+```powershell
+uv run python scripts/opswiki_generate_runbook.py --input examples/sample-obsidian-vault --output examples/sample-output/runbook-example.md --title "Kubernetes CrashLoopBackOff" --service "sample-obsidian-vault" --severity "SEV3" --focus "kubernetes"
+```
+
+The generator writes:
+
+- `runbook-example.md`
+
+The script extracts operational sections, related notes, and fenced shell commands. Commands are rendered as documentation only; the generator does not execute commands and does not connect to cloud accounts, clusters, CI systems, or external services.
 
 ## How To Use With Codex
 
@@ -99,6 +115,7 @@ Use Kubernetes Triage to investigate this CrashLoopBackOff.
 - No MCP server integration yet.
 - No app integration yet.
 - No Terraform, Kubernetes, or CI/CD static analysis helpers yet.
+- No automatic external incident timeline or production system discovery.
 - The plugin does not connect to cloud accounts, clusters, CI systems, or model registries.
 - Codex should treat examples as generic and safe placeholders.
 

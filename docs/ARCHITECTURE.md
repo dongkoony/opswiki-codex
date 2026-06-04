@@ -43,7 +43,31 @@ It compiles selected Markdown notes into:
 
 The exporter keeps source paths, wikilinks, tags, assumptions, and verification steps visible in the output. It is deterministic, local-only, and does not execute commands found in notes.
 
-Future versions can extend this pattern for runbook seeds and review checklists.
+## Script-Based Runbook Generation
+
+The v0.3.0 generator follows the same local-only script pattern through:
+
+```text
+scripts/opswiki_generate_runbook.py
+```
+
+It maps structured Markdown sections into a deterministic runbook draft:
+
+- purpose and scope
+- symptoms
+- confirmed facts
+- assumptions
+- safety checks
+- diagnosis steps
+- resolution steps
+- rollback
+- verification
+- escalation
+- related notes
+
+Fenced shell commands are rendered as documentation only. The generator does not execute commands, connect to external systems, or change plugin behavior.
+
+Future versions can extend this pattern for review checklists.
 
 ## Future Optional MCP Integration
 
