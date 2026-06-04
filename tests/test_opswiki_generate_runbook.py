@@ -79,3 +79,90 @@ kubectl get pods -n <namespace>
         self.assertIn("A confirmed fact exists.", "\n".join(draft.confirmed_facts))
         self.assertTrue(any("Confirm rollback" in item for item in draft.rollback_steps))
         self.assertTrue(draft.safety_checks)
+
+
+class RunbookCliTests(unittest.TestCase):
+    def test_sample_vault_generates_runbook_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "runbook.md"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(ROOT / "examples" / "sample-obsidian-vault"),
+                    "--output",
+                    str(output),
+                    "--title",
+                    "Kubernetes CrashLoopBackOff",
+                    "--service",
+                    "sample-opswiki",
+                    "--severity",
+                    "SEV3",
+                    "--focus",
+                    "kubernetes",
+                ],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            runbook = output.read_text(encoding="utf-8")
+            self.assertIn("# Runbook: Kubernetes CrashLoopBackOff", runbook)
+            self.assertIn("## Safety Checks", runbook)
+            self.assertIn("kubectl get pods -n <namespace>", runbook)
+            self.assertIn("Commands are documentation only", runbook)
+
+    def test_missing_input_directory_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(Path(tmp) / "missing"),
+                    "--output",
+                    str(Path(tmp) / "runbook.md"),
+                ],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("does not exist", result.stderr)
+
+    def test_empty_input_directory_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    tmp,
+                    "--output",
+                    str(Path(tmp) / "runbook.md"),
+                ],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("No Markdown files", result.stderr)
+
+    def test_output_directory_path_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--input",
+                    str(ROOT / "examples" / "sample-obsidian-vault"),
+                    "--output",
+                    tmp,
+                ],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("exists as a directory", result.stderr)
