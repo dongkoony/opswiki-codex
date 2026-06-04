@@ -30,6 +30,8 @@ OpsWiki for Codex is not a general LLM wiki plugin and is not only an Obsidian i
 
 ```text
 opswiki-codex/
+  README.md
+  LICENSE
   .codex-plugin/
     plugin.json
   skills/
@@ -47,7 +49,6 @@ opswiki-codex/
     ROADMAP.md
     ARCHITECTURE.md
     CONTRIBUTING.md
-    LICENSE
 ```
 
 Each skill contains a `SKILL.md` file and focused Markdown references.
