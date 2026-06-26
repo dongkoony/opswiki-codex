@@ -14,7 +14,7 @@ Implemented local runbook generator for turning structured Markdown or Obsidian-
 
 ## v0.4.0
 
-Terraform and Kubernetes static analysis helpers for common review and triage checks.
+Implemented local Terraform and Kubernetes static review helper for common review and triage checks.
 
 ## v0.5.0
 

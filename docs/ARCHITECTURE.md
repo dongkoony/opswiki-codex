@@ -67,7 +67,21 @@ It maps structured Markdown sections into a deterministic runbook draft:
 
 Fenced shell commands are rendered as documentation only. The generator does not execute commands, connect to external systems, or change plugin behavior.
 
-Future versions can extend this pattern for review checklists.
+## Script-Based Static Review
+
+The v0.4.0 static review helper follows the same local-only script pattern through:
+
+```text
+scripts/opswiki_static_review.py
+```
+
+It scans local Terraform and Kubernetes files and writes a Markdown review report with findings, assumptions, and verification questions.
+
+Terraform scanning is text-oriented and conservative. It checks high-signal patterns such as public ingress CIDRs, wildcard IAM policy text, sensitive-looking outputs, and missing tags on selected AWS resource blocks without evaluating modules, variables, providers, or plan output.
+
+Kubernetes scanning parses local YAML documents with PyYAML and checks common workload and Service review signals such as privileged containers, hostPath volumes, host networking, mutable image tags, missing resources, missing probes, default namespace use, and Service selectors without matching workload labels in scanned files.
+
+Findings are review prompts, not authoritative policy decisions. The helper does not execute commands, connect to cloud accounts, contact Kubernetes API servers, or change plugin behavior.
 
 ## Future Optional MCP Integration
 
