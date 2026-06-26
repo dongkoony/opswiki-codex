@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-web
+spec:
+  selector:
+    matchLabels:
+      app: sample-web
+  template:
+    metadata:
+      labels:
+        app: sample-web
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: host-logs
+          hostPath:
+            path: /var/log
+      containers:
+        - name: web
+          image: nginx:latest
+          securityContext:
+            privileged: true

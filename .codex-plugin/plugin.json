@@ -1,6 +1,6 @@
 {
   "name": "opswiki-codex",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "DevOps and MLOps runbook intelligence for Codex.",
   "author": {
     "name": "OpsWiki contributors"
