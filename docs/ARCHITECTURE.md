@@ -83,8 +83,22 @@ Kubernetes scanning parses local YAML documents with PyYAML and checks common wo
 
 Findings are review prompts, not authoritative policy decisions. The helper does not execute commands, connect to cloud accounts, contact Kubernetes API servers, or change plugin behavior.
 
-## Future Optional MCP Integration
+## Optional MCP Integration
 
-An optional MCP server may later expose compiled context and runbook indexes to Codex. MCP should remain optional because the plugin must continue to work as a local skills-and-scripts plugin.
+The v0.5.0 optional MCP layer is implemented through:
 
-The MCP layer should not directly connect to production systems by default. Any future integration with cloud, cluster, CI/CD, or model registry systems should require explicit configuration and safe authentication boundaries.
+```text
+mcp/opswiki_server.py
+```
+
+It exposes a read-only local index over:
+
+- sample source notes
+- context brief output
+- generated AGENTS.md output
+- runbook example output
+- static review report output
+
+Generation remains in the CLI scripts for v0.5.0. The MCP server only lists and reads existing local files, using repository-root path confinement, hidden-path rejection, UTF-8 validation, and file-size limits before returning content.
+
+The MCP layer does not execute commands, connect to cloud accounts, contact Kubernetes API servers, call CI APIs, or change plugin behavior. Any future integration with cloud, cluster, CI/CD, or model registry systems should require explicit configuration and safe authentication boundaries.

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "opswiki": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp",
+        "python",
+        "mcp/opswiki_server.py"
+      ]
+    }
+  }
+}
