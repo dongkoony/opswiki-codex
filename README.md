@@ -2,7 +2,7 @@
 
 OpsWiki for Codex is a DevOps and MLOps-focused Codex plugin for turning Markdown or Obsidian-style operational notes into reusable agent context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.
 
-This v0.3.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, and a local runbook generator. It does not add MCP servers or app integrations.
+This v0.4.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, a local runbook generator, and a local Terraform/Kubernetes static review helper. It does not add MCP servers or app integrations.
 
 ## How It Is Different
 
@@ -21,6 +21,7 @@ OpsWiki for Codex is not a general LLM wiki plugin and is not only an Obsidian i
 - Export Markdown or Obsidian notes into a Codex context brief.
 - Draft AGENTS.md guidance for DevOps/MLOps repositories.
 - Generate a focused operational runbook from structured notes.
+- Run local Terraform and Kubernetes static review checks.
 - Create and improve incident runbooks.
 - Review Terraform and AWS infrastructure changes.
 - Triage Kubernetes workload failures.
@@ -43,14 +44,17 @@ opswiki-codex/
     cicd-review/
     mlops-deployment/
   examples/
+    sample-infra/
     sample-obsidian-vault/
     sample-output/
   scripts/
     opswiki_export_context.py
     opswiki_generate_runbook.py
+    opswiki_static_review.py
   tests/
     test_opswiki_export_context.py
     test_opswiki_generate_runbook.py
+    test_opswiki_static_review.py
   docs/
     ROADMAP.md
     ARCHITECTURE.md
@@ -88,6 +92,20 @@ The generator writes:
 
 The script extracts operational sections, related notes, and fenced shell commands. Commands are rendered as documentation only; the generator does not execute commands and does not connect to cloud accounts, clusters, CI systems, or external services.
 
+## Static Review Helper
+
+Use the v0.4.0 helper to scan local Terraform and Kubernetes files and write a Markdown review report:
+
+```powershell
+uv run --with pyyaml python scripts/opswiki_static_review.py --input examples/sample-infra --output examples/sample-output/static-review.md --project-name sample-infra
+```
+
+The helper writes:
+
+- `static-review.md`
+
+Commands in the generated report are documentation only. The helper reads local files and does not execute `terraform`, `tofu`, `kubectl`, cloud APIs, cluster calls, or scanner binaries.
+
 ## How To Use With Codex
 
 1. Install or load this local plugin in Codex.
@@ -114,7 +132,7 @@ Use Kubernetes Triage to investigate this CrashLoopBackOff.
 - No live Obsidian API integration.
 - No MCP server integration yet.
 - No app integration yet.
-- No Terraform, Kubernetes, or CI/CD static analysis helpers yet.
+- No CI/CD static analysis helper yet.
 - No automatic external incident timeline or production system discovery.
 - The plugin does not connect to cloud accounts, clusters, CI systems, or model registries.
 - Codex should treat examples as generic and safe placeholders.
