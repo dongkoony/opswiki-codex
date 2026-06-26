@@ -18,7 +18,7 @@ Implemented local Terraform and Kubernetes static review helper for common revie
 
 ## v0.5.0
 
-Optional MCP integration for controlled access to compiled context, runbook indexes, and local knowledge sources.
+Implemented optional local MCP integration for read-only access to generated OpsWiki outputs and source notes.
 
 ## v1.0.0
 

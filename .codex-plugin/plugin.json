@@ -1,6 +1,6 @@
 {
   "name": "opswiki-codex",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "DevOps and MLOps runbook intelligence for Codex.",
   "author": {
     "name": "OpsWiki contributors"
@@ -19,6 +19,7 @@
     "markdown"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "OpsWiki for Codex",
     "shortDescription": "DevOps and MLOps runbook intelligence for Codex.",
@@ -28,7 +29,8 @@
     "capabilities": [
       "Skills",
       "Runbooks",
-      "Infrastructure Review"
+      "Infrastructure Review",
+      "MCP"
     ],
     "defaultPrompt": [
       "Turn these ops notes into Codex context.",

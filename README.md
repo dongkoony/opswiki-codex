@@ -2,7 +2,7 @@
 
 OpsWiki for Codex is a DevOps and MLOps-focused Codex plugin for turning Markdown or Obsidian-style operational notes into reusable agent context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.
 
-This v0.4.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, a local runbook generator, and a local Terraform/Kubernetes static review helper. It does not add MCP servers or app integrations.
+This v0.5.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, a local runbook generator, a local Terraform/Kubernetes static review helper, and optional local MCP access to generated OpsWiki outputs and source notes. It does not add app integrations.
 
 ## How It Is Different
 
@@ -34,8 +34,11 @@ OpsWiki for Codex is not a general LLM wiki plugin and is not only an Obsidian i
 opswiki-codex/
   README.md
   LICENSE
+  .mcp.json
   .codex-plugin/
     plugin.json
+  mcp/
+    opswiki_server.py
   skills/
     opswiki-context/
     devops-runbook/
@@ -55,6 +58,7 @@ opswiki-codex/
     test_opswiki_export_context.py
     test_opswiki_generate_runbook.py
     test_opswiki_static_review.py
+    test_opswiki_mcp_server.py
   docs/
     ROADMAP.md
     ARCHITECTURE.md
@@ -106,6 +110,23 @@ The helper writes:
 
 Commands in the generated report are documentation only. The helper reads local files and does not execute `terraform`, `tofu`, `kubectl`, cloud APIs, cluster calls, or scanner binaries.
 
+## Optional MCP Server
+
+Use the v0.5.0 optional local MCP server to expose generated OpsWiki outputs and source notes as read-only MCP resources and tools:
+
+```powershell
+uv run --with mcp python mcp/opswiki_server.py
+```
+
+The MCP server provides read-only tools:
+
+- `list_opswiki_outputs`
+- `read_opswiki_output`
+- `list_opswiki_notes`
+- `read_opswiki_note`
+
+The server reads local repository files only. It does not execute `terraform`, `tofu`, `kubectl`, cloud APIs, cluster calls, CI APIs, shell commands, or scanner binaries.
+
 ## How To Use With Codex
 
 1. Install or load this local plugin in Codex.
@@ -130,7 +151,6 @@ Use Kubernetes Triage to investigate this CrashLoopBackOff.
 ## Current Limitations
 
 - No live Obsidian API integration.
-- No MCP server integration yet.
 - No app integration yet.
 - No CI/CD static analysis helper yet.
 - No automatic external incident timeline or production system discovery.
