@@ -10,6 +10,8 @@ from hashlib import sha1
 from pathlib import Path
 from typing import Iterable
 
+from mcp.server.fastmcp import FastMCP
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MAX_READ_BYTES = 256 * 1024
@@ -227,3 +229,93 @@ def read_source_note(repo_root: Path, note_id: str) -> dict[str, object]:
 
 def json_dumps(data: object) -> str:
     return json.dumps(data, indent=2, ensure_ascii=False)
+
+
+def artifact_payload(artifact: OpsWikiArtifact) -> dict[str, object]:
+    return asdict(artifact)
+
+
+def note_payload(note: OpsWikiNote) -> dict[str, object]:
+    return asdict(note)
+
+
+def create_server(repo_root: Path = REPO_ROOT) -> FastMCP:
+    app = FastMCP(
+        "opswiki",
+        instructions=(
+            "Read-only access to local OpsWiki sample notes and generated outputs. "
+            "This server does not execute commands or contact external systems."
+        ),
+    )
+
+    @app.tool()
+    def list_opswiki_outputs() -> dict[str, object]:
+        """List generated OpsWiki output artifacts available in this repository."""
+        return {
+            "outputs": [
+                artifact_payload(artifact)
+                for artifact in list_output_artifacts(repo_root)
+            ]
+        }
+
+    @app.tool()
+    def read_opswiki_output(id: str) -> dict[str, object]:
+        """Read one generated OpsWiki output artifact by stable id."""
+        return read_output_artifact(repo_root, id)
+
+    @app.tool()
+    def list_opswiki_notes() -> dict[str, object]:
+        """List local OpsWiki source notes available in this repository."""
+        return {
+            "notes": [
+                note_payload(note)
+                for note in list_source_notes(repo_root)
+            ]
+        }
+
+    @app.tool()
+    def read_opswiki_note(id: str) -> dict[str, object]:
+        """Read one local OpsWiki source note by stable id."""
+        return read_source_note(repo_root, id)
+
+    @app.resource(
+        "opswiki://outputs",
+        name="OpsWiki generated outputs",
+        mime_type="application/json",
+    )
+    def outputs_resource() -> str:
+        return json_dumps(list_opswiki_outputs())
+
+    @app.resource(
+        "opswiki://notes",
+        name="OpsWiki source notes",
+        mime_type="application/json",
+    )
+    def notes_resource() -> str:
+        return json_dumps(list_opswiki_notes())
+
+    @app.resource(
+        "opswiki://outputs/{artifact_id}",
+        name="OpsWiki generated output",
+        mime_type="text/markdown",
+    )
+    def output_resource(artifact_id: str) -> str:
+        return str(read_output_artifact(repo_root, artifact_id)["content"])
+
+    @app.resource(
+        "opswiki://notes/{note_id}",
+        name="OpsWiki source note",
+        mime_type="text/markdown",
+    )
+    def note_resource(note_id: str) -> str:
+        return str(read_source_note(repo_root, note_id)["content"])
+
+    return app
+
+
+def main() -> None:
+    create_server().run()
+
+
+if __name__ == "__main__":
+    main()

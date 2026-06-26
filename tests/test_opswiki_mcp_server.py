@@ -95,5 +95,29 @@ class OpsWikiReadGuardTests(unittest.TestCase):
                 server.read_text_file(repo_root, Path("bad.md"))
 
 
+class OpsWikiMcpRegistrationTests(unittest.TestCase):
+    def test_create_server_registers_expected_tools(self):
+        server_module = load_server()
+        app = server_module.create_server(ROOT)
+
+        tools = asyncio.run(app.list_tools())
+        tool_names = {tool.name for tool in tools}
+
+        self.assertIn("list_opswiki_outputs", tool_names)
+        self.assertIn("read_opswiki_output", tool_names)
+        self.assertIn("list_opswiki_notes", tool_names)
+        self.assertIn("read_opswiki_note", tool_names)
+
+    def test_create_server_registers_expected_resources(self):
+        server_module = load_server()
+        app = server_module.create_server(ROOT)
+
+        resources = asyncio.run(app.list_resources())
+        resource_uris = {str(resource.uri) for resource in resources}
+
+        self.assertIn("opswiki://outputs", resource_uris)
+        self.assertIn("opswiki://notes", resource_uris)
+
+
 if __name__ == "__main__":
     unittest.main()
