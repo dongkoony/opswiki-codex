@@ -68,9 +68,37 @@ def unique_preserve_order(values: Iterable[str]) -> list[str]:
     return result
 
 
+def validate_relative_path(relative_path: Path) -> None:
+    if relative_path.is_absolute():
+        raise McpServerError("Unsafe repository path.")
+    if ".." in relative_path.parts:
+        raise McpServerError("Unsafe repository path.")
+    if any(part.startswith(".") for part in relative_path.parts):
+        raise McpServerError("Unsafe repository path.")
+
+
+def resolve_repo_path(repo_root: Path, relative_path: Path) -> Path:
+    validate_relative_path(relative_path)
+    root = repo_root.resolve()
+    resolved = (root / relative_path).resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise McpServerError("Unsafe repository path.") from exc
+    return resolved
+
+
 def read_text_file(repo_root: Path, relative_path: Path) -> str:
-    path = repo_root / relative_path
-    return path.read_text(encoding="utf-8")
+    path = resolve_repo_path(repo_root, relative_path)
+    if not path.is_file():
+        raise McpServerError(f"File not found: {relative_path.as_posix()}")
+    size_bytes = path.stat().st_size
+    if size_bytes > MAX_READ_BYTES:
+        raise McpServerError(f"File is too large: {relative_path.as_posix()}")
+    try:
+        return path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as exc:
+        raise McpServerError(f"File is not valid UTF-8: {relative_path.as_posix()}") from exc
 
 
 def extract_title(path: Path, text: str) -> str:

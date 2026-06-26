@@ -55,5 +55,45 @@ class OpsWikiIndexTests(unittest.TestCase):
         self.assertIn("CrashLoopBackOff", note["content"])
 
 
+class OpsWikiReadGuardTests(unittest.TestCase):
+    def test_read_text_file_rejects_absolute_paths_and_traversal(self):
+        server = load_server()
+
+        absolute_path = Path(Path.cwd().anchor) / "outside.md"
+        with self.assertRaisesRegex(server.McpServerError, "Unsafe repository path"):
+            server.read_text_file(ROOT, absolute_path)
+
+        with self.assertRaisesRegex(server.McpServerError, "Unsafe repository path"):
+            server.read_text_file(ROOT, Path("../README.md"))
+
+    def test_read_text_file_rejects_hidden_paths(self):
+        server = load_server()
+
+        with self.assertRaisesRegex(server.McpServerError, "Unsafe repository path"):
+            server.read_text_file(ROOT, Path(".git/config"))
+
+    def test_read_text_file_rejects_oversized_files(self):
+        server = load_server()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo_root = Path(tmp)
+            large_file = repo_root / "large.md"
+            large_file.write_text("x" * (server.MAX_READ_BYTES + 1), encoding="utf-8")
+
+            with self.assertRaisesRegex(server.McpServerError, "File is too large"):
+                server.read_text_file(repo_root, Path("large.md"))
+
+    def test_read_text_file_rejects_non_utf8_files(self):
+        server = load_server()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo_root = Path(tmp)
+            binary_file = repo_root / "bad.md"
+            binary_file.write_bytes(b"\xff\xfe\x00\x00")
+
+            with self.assertRaisesRegex(server.McpServerError, "not valid UTF-8"):
+                server.read_text_file(repo_root, Path("bad.md"))
+
+
 if __name__ == "__main__":
     unittest.main()
