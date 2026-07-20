@@ -75,6 +75,8 @@ Each skill contains a `SKILL.md` file and focused Markdown references.
 
 Use the v0.2.0 exporter to compile Markdown or Obsidian-style notes into reviewable Codex context outputs:
 
+![Markdown context exporter](docs/assets/readme/context-exporter.png)
+
 ```powershell
 uv run python scripts/opswiki_export_context.py --input examples/sample-obsidian-vault --output examples/sample-output --project-name sample-obsidian-vault
 ```
@@ -90,6 +92,8 @@ The script extracts note titles, tags, `[[wikilink]]` references, operational se
 
 Use the v0.3.0 generator to turn Markdown or Obsidian-style operational notes into a focused Markdown runbook:
 
+![Runbook generator](docs/assets/readme/runbook-generator.png)
+
 ```powershell
 uv run python scripts/opswiki_generate_runbook.py --input examples/sample-obsidian-vault --output examples/sample-output/runbook-example.md --title "Kubernetes CrashLoopBackOff" --service "sample-obsidian-vault" --severity "SEV3" --focus "kubernetes"
 ```
@@ -104,6 +108,8 @@ The script extracts operational sections, related notes, and fenced shell comman
 
 Use the v0.4.0 helper to scan local Terraform and Kubernetes files and write a Markdown review report:
 
+![Static review helper](docs/assets/readme/static-review.png)
+
 ```powershell
 uv run --with pyyaml python scripts/opswiki_static_review.py --input examples/sample-infra --output examples/sample-output/static-review.md --project-name sample-infra
 ```
@@ -117,6 +123,8 @@ Commands in the generated report are documentation only. The helper reads local 
 ## Optional MCP Server
 
 Use the v0.5.0 optional local MCP server to expose generated OpsWiki outputs and source notes as read-only MCP resources and tools:
+
+![Optional MCP server](docs/assets/readme/mcp-server.png)
 
 ```powershell
 uv run --with mcp python mcp/opswiki_server.py

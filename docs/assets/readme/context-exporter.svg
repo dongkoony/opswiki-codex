@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Markdown context exporter workflow</title>
+  <desc id="desc">A diagram showing Markdown and Obsidian-style notes being exported into a context brief and AGENTS.md guidance.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #dbe3ee; stroke-width: 2; rx: 8; }
+      .title { font: 700 52px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .subtitle { font: 400 24px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .head { font: 700 26px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .label { font: 700 23px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .body { font: 400 20px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .code { font: 600 19px "Consolas", "Cascadia Mono", monospace; fill: #334155; letter-spacing: 0; }
+      .badge { font: 700 18px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .arrow { stroke: #334155; stroke-width: 5; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect class="bg" width="1600" height="900"/>
+  <circle cx="1420" cy="116" r="96" fill="#dcfce7" opacity="0.85"/>
+  <circle cx="145" cy="760" r="122" fill="#e0f2fe" opacity="0.75"/>
+
+  <text class="title" x="80" y="94">Markdown Context Exporter</text>
+  <text class="subtitle" x="82" y="136">Compile local operational notes into Codex-ready context and project guidance.</text>
+
+  <g transform="translate(90 220)" filter="url(#shadow)">
+    <rect class="card" width="420" height="430"/>
+    <rect width="420" height="76" rx="8" fill="#0f766e"/>
+    <path d="M0 68 H420 V86 H0 Z" fill="#0f766e"/>
+    <text class="head" x="30" y="47">Source Notes</text>
+    <rect x="30" y="112" width="360" height="58" rx="8" fill="#ccfbf1" stroke="#5eead4"/>
+    <text class="label" x="54" y="149">Kubernetes CrashLoopBackOff</text>
+    <rect x="30" y="190" width="360" height="58" rx="8" fill="#ecfdf5" stroke="#86efac"/>
+    <text class="label" x="54" y="227">Jenkins Docker Permission</text>
+    <rect x="30" y="268" width="360" height="58" rx="8" fill="#fef3c7" stroke="#fbbf24"/>
+    <text class="label" x="54" y="305">Terraform Security Group</text>
+    <text class="body" x="30" y="374">Extracts titles, tags, wikilinks,</text>
+    <text class="body" x="30" y="406">sections, and shell snippets.</text>
+  </g>
+
+  <path class="arrow" d="M545 435 C590 435, 612 435, 650 435"/>
+
+  <g transform="translate(650 255)" filter="url(#shadow)">
+    <rect class="card" width="300" height="360"/>
+    <rect width="300" height="76" rx="8" fill="#1d4ed8"/>
+    <path d="M0 68 H300 V86 H0 Z" fill="#1d4ed8"/>
+    <text class="head" x="28" y="47">Exporter CLI</text>
+    <rect x="28" y="116" width="244" height="78" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text class="code" x="50" y="149">opswiki_export</text>
+    <text class="code" x="50" y="175">_context.py</text>
+    <text class="body" x="28" y="240">Local-only processing.</text>
+    <text class="body" x="28" y="274">No command execution.</text>
+    <text class="body" x="28" y="308">Draft output for review.</text>
+  </g>
+
+  <path class="arrow" d="M986 435 C1032 435, 1054 435, 1090 435"/>
+
+  <g transform="translate(1090 220)" filter="url(#shadow)">
+    <rect class="card" width="420" height="430"/>
+    <rect width="420" height="76" rx="8" fill="#7c3aed"/>
+    <path d="M0 68 H420 V86 H0 Z" fill="#7c3aed"/>
+    <text class="head" x="30" y="47">Generated Outputs</text>
+    <rect x="30" y="118" width="360" height="94" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="153">context-brief.md</text>
+    <text class="body" x="54" y="184">Summaries, source index, assumptions</text>
+    <rect x="30" y="238" width="360" height="94" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="273">AGENTS.md</text>
+    <text class="body" x="54" y="304">Operational rules and review focus</text>
+    <text class="body" x="30" y="382">Outputs stay reviewable Markdown.</text>
+  </g>
+
+  <g transform="translate(265 715)">
+    <rect width="1070" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="28" y="26" width="132" height="44" rx="8" fill="#0f766e"/>
+    <text class="badge" x="55" y="54">Local input</text>
+    <rect x="186" y="26" width="178" height="44" rx="8" fill="#1d4ed8"/>
+    <text class="badge" x="216" y="54">Deterministic CLI</text>
+    <rect x="390" y="26" width="178" height="44" rx="8" fill="#475569"/>
+    <text class="badge" x="421" y="54">Reviewable MD</text>
+    <text class="body" x="600" y="54">Markdown artifacts are generated locally for Codex.</text>
+  </g>
+</svg>

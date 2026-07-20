@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Runbook generator workflow</title>
+  <desc id="desc">A diagram showing focused operational notes becoming a structured runbook draft with safety checks, diagnosis, rollback, and verification sections.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #dbe3ee; stroke-width: 2; rx: 8; }
+      .title { font: 700 52px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .subtitle { font: 400 24px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .head { font: 700 26px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .label { font: 700 23px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .body { font: 400 20px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .code { font: 600 18px "Consolas", "Cascadia Mono", monospace; fill: #334155; letter-spacing: 0; }
+      .badge { font: 700 18px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .arrow { stroke: #334155; stroke-width: 5; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect class="bg" width="1600" height="900"/>
+  <circle cx="1400" cy="116" r="96" fill="#fef3c7" opacity="0.9"/>
+  <circle cx="145" cy="760" r="122" fill="#dcfce7" opacity="0.75"/>
+
+  <text class="title" x="80" y="94">Runbook Generator</text>
+  <text class="subtitle" x="82" y="136">Turn structured incident notes into a practical Markdown runbook draft.</text>
+
+  <g transform="translate(80 218)" filter="url(#shadow)">
+    <rect class="card" width="430" height="430"/>
+    <rect width="430" height="76" rx="8" fill="#0f766e"/>
+    <path d="M0 68 H430 V86 H0 Z" fill="#0f766e"/>
+    <text class="head" x="30" y="47">Focused Notes</text>
+    <rect x="30" y="110" width="370" height="88" rx="8" fill="#ccfbf1" stroke="#5eead4"/>
+    <text class="label" x="54" y="145">Kubernetes CrashLoopBackOff</text>
+    <text class="body" x="54" y="174">Symptoms, checks, causes</text>
+    <rect x="30" y="224" width="370" height="88" rx="8" fill="#ecfdf5" stroke="#86efac"/>
+    <text class="label" x="54" y="259">Related operational notes</text>
+    <text class="body" x="54" y="288">Wikilinks and context</text>
+    <text class="body" x="30" y="362">Focus filter: kubernetes</text>
+    <text class="body" x="30" y="394">Severity: SEV3</text>
+  </g>
+
+  <path class="arrow" d="M545 433 C588 433, 608 433, 642 433"/>
+
+  <g transform="translate(642 255)" filter="url(#shadow)">
+    <rect class="card" width="316" height="360"/>
+    <rect width="316" height="76" rx="8" fill="#1d4ed8"/>
+    <path d="M0 68 H316 V86 H0 Z" fill="#1d4ed8"/>
+    <text class="head" x="28" y="47">Generator CLI</text>
+    <rect x="28" y="116" width="260" height="88" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text class="code" x="50" y="149">opswiki_generate</text>
+    <text class="code" x="50" y="177">_runbook.py</text>
+    <text class="body" x="28" y="246">Maps notes into</text>
+    <text class="body" x="28" y="278">a standard runbook shape.</text>
+    <text class="body" x="28" y="312">Commands stay documentation.</text>
+  </g>
+
+  <path class="arrow" d="M994 433 C1038 433, 1058 433, 1092 433"/>
+
+  <g transform="translate(1092 198)" filter="url(#shadow)">
+    <rect class="card" width="428" height="470"/>
+    <rect width="428" height="76" rx="8" fill="#7c3aed"/>
+    <path d="M0 68 H428 V86 H0 Z" fill="#7c3aed"/>
+    <text class="head" x="30" y="47">Runbook Draft</text>
+    <rect x="30" y="108" width="368" height="44" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="137">Purpose and Scope</text>
+    <rect x="30" y="164" width="368" height="44" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="193">Symptoms and Assumptions</text>
+    <rect x="30" y="220" width="368" height="44" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="249">Diagnosis Steps</text>
+    <rect x="30" y="276" width="368" height="44" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="305">Resolution and Rollback</text>
+    <rect x="30" y="332" width="368" height="44" rx="8" fill="#f5f3ff" stroke="#c4b5fd"/>
+    <text class="label" x="54" y="361">Verification and Escalation</text>
+    <text class="body" x="30" y="424">Output: runbook-example.md</text>
+  </g>
+
+  <g transform="translate(250 720)">
+    <rect width="1100" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="28" y="26" width="146" height="44" rx="8" fill="#0f766e"/>
+    <text class="badge" x="58" y="54">Source notes</text>
+    <rect x="200" y="26" width="156" height="44" rx="8" fill="#1d4ed8"/>
+    <text class="badge" x="231" y="54">Structured CLI</text>
+    <rect x="382" y="26" width="140" height="44" rx="8" fill="#475569"/>
+    <text class="badge" x="414" y="54">Safe draft</text>
+    <text class="body" x="554" y="54">Read-only diagnosis first; state changes require review.</text>
+  </g>
+</svg>
