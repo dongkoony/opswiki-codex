@@ -22,4 +22,13 @@ Implemented optional local MCP integration for read-only access to generated Ops
 
 ## v1.0.0
 
-Stable release with documented workflows, tested exporters, clear upgrade guidance, and production-quality examples.
+Stabilized local-first release with documented workflows, tested exporters, release checklist, upgrade guidance, optional read-only MCP access, and production-quality safe examples.
+
+## Post-v1.0 Backlog
+
+- Live Obsidian integration.
+- App integration through `.app.json`.
+- CI/CD static analysis helper.
+- Automatic external incident timeline discovery.
+- Provider-authenticated cloud, cluster, CI, or model registry adapters.
+- Writable MCP tools.
