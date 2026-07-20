@@ -90,3 +90,19 @@ initial commit
 - Use clear Markdown documentation.
 - Keep examples generic and safe.
 - Clearly separate confirmed facts, assumptions, verification steps, and resolution steps in runbook-related content.
+
+## Release Readiness
+
+Before opening a release PR, follow `docs/RELEASE_CHECKLIST.md`.
+
+Release PRs should include:
+
+- a summary of user-facing changes
+- the reason for the release
+- changed files and workflows
+- safety and behavior notes
+- local test and plugin validation results
+- GitHub Actions status
+- milestone information when a matching milestone exists
+
+Do not tag or publish a GitHub release until the maintainer explicitly approves publication.

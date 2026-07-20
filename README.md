@@ -2,7 +2,9 @@
 
 OpsWiki for Codex is a DevOps and MLOps-focused Codex plugin for turning Markdown or Obsidian-style operational notes into reusable agent context, runbooks, infrastructure review workflows, troubleshooting references, and project-specific AGENTS.md guidance.
 
-This v0.5.0 release provides Codex skills, Markdown references, a local Markdown/Obsidian context exporter, a local runbook generator, a local Terraform/Kubernetes static review helper, and optional local MCP access to generated OpsWiki outputs and source notes. It does not add app integrations.
+This v1.0.0 release stabilizes the local OpsWiki workflow set: Codex skills, Markdown references, a local Markdown/Obsidian context exporter, a local runbook generator, a local Terraform/Kubernetes static review helper, optional local MCP access to generated OpsWiki outputs and source notes, and release readiness documentation. It does not add app integrations or live production-system integrations.
+
+![OpsWiki for Codex workflow](docs/assets/readme/opswiki-workflow.png)
 
 ## How It Is Different
 
@@ -60,6 +62,8 @@ opswiki-codex/
     test_opswiki_static_review.py
     test_opswiki_mcp_server.py
   docs/
+    RELEASE_CHECKLIST.md
+    UPGRADE.md
     ROADMAP.md
     ARCHITECTURE.md
     CONTRIBUTING.md
@@ -70,6 +74,8 @@ Each skill contains a `SKILL.md` file and focused Markdown references.
 ## Markdown Context Exporter
 
 Use the v0.2.0 exporter to compile Markdown or Obsidian-style notes into reviewable Codex context outputs:
+
+![Markdown context exporter](docs/assets/readme/context-exporter.png)
 
 ```powershell
 uv run python scripts/opswiki_export_context.py --input examples/sample-obsidian-vault --output examples/sample-output --project-name sample-obsidian-vault
@@ -86,6 +92,8 @@ The script extracts note titles, tags, `[[wikilink]]` references, operational se
 
 Use the v0.3.0 generator to turn Markdown or Obsidian-style operational notes into a focused Markdown runbook:
 
+![Runbook generator](docs/assets/readme/runbook-generator.png)
+
 ```powershell
 uv run python scripts/opswiki_generate_runbook.py --input examples/sample-obsidian-vault --output examples/sample-output/runbook-example.md --title "Kubernetes CrashLoopBackOff" --service "sample-obsidian-vault" --severity "SEV3" --focus "kubernetes"
 ```
@@ -99,6 +107,8 @@ The script extracts operational sections, related notes, and fenced shell comman
 ## Static Review Helper
 
 Use the v0.4.0 helper to scan local Terraform and Kubernetes files and write a Markdown review report:
+
+![Static review helper](docs/assets/readme/static-review.png)
 
 ```powershell
 uv run --with pyyaml python scripts/opswiki_static_review.py --input examples/sample-infra --output examples/sample-output/static-review.md --project-name sample-infra
@@ -114,6 +124,8 @@ Commands in the generated report are documentation only. The helper reads local 
 
 Use the v0.5.0 optional local MCP server to expose generated OpsWiki outputs and source notes as read-only MCP resources and tools:
 
+![Optional MCP server](docs/assets/readme/mcp-server.png)
+
 ```powershell
 uv run --with mcp python mcp/opswiki_server.py
 ```
@@ -126,6 +138,26 @@ The MCP server provides read-only tools:
 - `read_opswiki_note`
 
 The server reads local repository files only. It does not execute `terraform`, `tofu`, `kubectl`, cloud APIs, cluster calls, CI APIs, shell commands, or scanner binaries.
+
+## Validation Matrix
+
+Use these commands to verify the stable local workflow set:
+
+| Workflow | Command |
+| --- | --- |
+| Full test suite | `uv run --with pyyaml --with mcp python -m unittest discover -s tests -v` |
+| Plugin validation | `uv run --with pyyaml --with mcp python C:\Users\dongh\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py C:\Users\dongh\iCloudDrive\opswiki-codex` |
+| Whitespace check | `git diff --check` |
+| Context exporter sample | `uv run python scripts/opswiki_export_context.py --input examples/sample-obsidian-vault --output examples/sample-output --project-name sample-obsidian-vault` |
+| Runbook generator sample | `uv run python scripts/opswiki_generate_runbook.py --input examples/sample-obsidian-vault --output examples/sample-output/runbook-example.md --title "Kubernetes CrashLoopBackOff" --service "sample-obsidian-vault" --severity "SEV3" --focus "kubernetes"` |
+| Static review sample | `uv run --with pyyaml python scripts/opswiki_static_review.py --input examples/sample-infra --output examples/sample-output/static-review.md --project-name sample-infra` |
+| MCP tests | `uv run --with mcp python -m unittest tests.test_opswiki_mcp_server -v` |
+
+## Release And Upgrade
+
+- Release checklist: `docs/RELEASE_CHECKLIST.md`
+- Upgrade guide: `docs/UPGRADE.md`
+- Roadmap: `docs/ROADMAP.md`
 
 ## How To Use With Codex
 
@@ -148,7 +180,7 @@ Use Terraform Review to review this AWS security group change.
 Use Kubernetes Triage to investigate this CrashLoopBackOff.
 ```
 
-## Current Limitations
+## Post-v1.0 Backlog
 
 - No live Obsidian API integration.
 - No app integration yet.

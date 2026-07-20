@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Static review helper workflow</title>
+  <desc id="desc">A diagram showing Terraform and Kubernetes sample files being scanned locally into a static review report with findings and recommendations.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #dbe3ee; stroke-width: 2; rx: 8; }
+      .title { font: 700 52px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .subtitle { font: 400 24px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .head { font: 700 26px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .label { font: 700 23px "Segoe UI", Arial, sans-serif; fill: #0f172a; letter-spacing: 0; }
+      .body { font: 400 20px "Segoe UI", Arial, sans-serif; fill: #475569; letter-spacing: 0; }
+      .code { font: 600 18px "Consolas", "Cascadia Mono", monospace; fill: #334155; letter-spacing: 0; }
+      .badge { font: 700 18px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .finding { font: 700 18px "Segoe UI", Arial, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .arrow { stroke: #334155; stroke-width: 5; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect class="bg" width="1600" height="900"/>
+  <circle cx="1410" cy="116" r="96" fill="#fee2e2" opacity="0.78"/>
+  <circle cx="145" cy="760" r="122" fill="#fef3c7" opacity="0.75"/>
+
+  <text class="title" x="80" y="94">Static Review Helper</text>
+  <text class="subtitle" x="82" y="136">Scan local Terraform and Kubernetes samples into a reviewable findings report.</text>
+
+  <g transform="translate(80 215)" filter="url(#shadow)">
+    <rect class="card" width="432" height="438"/>
+    <rect width="432" height="76" rx="8" fill="#0f766e"/>
+    <path d="M0 68 H432 V86 H0 Z" fill="#0f766e"/>
+    <text class="head" x="30" y="47">Local Inputs</text>
+    <rect x="30" y="112" width="372" height="78" rx="8" fill="#ccfbf1" stroke="#5eead4"/>
+    <text class="label" x="54" y="145">terraform/security_group.tf</text>
+    <text class="body" x="54" y="174">public ingress fixture</text>
+    <rect x="30" y="212" width="372" height="78" rx="8" fill="#ecfdf5" stroke="#86efac"/>
+    <text class="label" x="54" y="245">terraform/iam.tf</text>
+    <text class="body" x="54" y="274">wildcard IAM fixture</text>
+    <rect x="30" y="312" width="372" height="78" rx="8" fill="#fef3c7" stroke="#fbbf24"/>
+    <text class="label" x="54" y="345">kubernetes/deployment.yaml</text>
+    <text class="body" x="54" y="374">workload risk fixture</text>
+  </g>
+
+  <path class="arrow" d="M548 434 C592 434, 612 434, 646 434"/>
+
+  <g transform="translate(646 255)" filter="url(#shadow)">
+    <rect class="card" width="308" height="360"/>
+    <rect width="308" height="76" rx="8" fill="#1d4ed8"/>
+    <path d="M0 68 H308 V86 H0 Z" fill="#1d4ed8"/>
+    <text class="head" x="28" y="47">Review CLI</text>
+    <rect x="28" y="116" width="252" height="88" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text class="code" x="48" y="149">opswiki_static</text>
+    <text class="code" x="48" y="177">_review.py</text>
+    <text class="body" x="28" y="246">Text-oriented Terraform checks.</text>
+    <text class="body" x="28" y="278">PyYAML Kubernetes checks.</text>
+    <text class="body" x="28" y="312">No live infrastructure calls.</text>
+  </g>
+
+  <path class="arrow" d="M990 434 C1034 434, 1054 434, 1088 434"/>
+
+  <g transform="translate(1088 200)" filter="url(#shadow)">
+    <rect class="card" width="432" height="468"/>
+    <rect width="432" height="76" rx="8" fill="#7c3aed"/>
+    <path d="M0 68 H432 V86 H0 Z" fill="#7c3aed"/>
+    <text class="head" x="30" y="47">Static Review Report</text>
+    <rect x="30" y="112" width="372" height="58" rx="8" fill="#dc2626"/>
+    <text class="finding" x="54" y="148">HIGH · TF_PUBLIC_INGRESS</text>
+    <rect x="30" y="190" width="372" height="58" rx="8" fill="#dc2626"/>
+    <text class="finding" x="54" y="226">HIGH · K8S_PRIVILEGED_CONTAINER</text>
+    <rect x="30" y="268" width="372" height="58" rx="8" fill="#d97706"/>
+    <text class="finding" x="54" y="304">MEDIUM · K8S_MISSING_LIMITS</text>
+    <rect x="30" y="346" width="372" height="58" rx="8" fill="#475569"/>
+    <text class="finding" x="54" y="382">Verification questions</text>
+    <text class="body" x="30" y="434">Output: static-review.md</text>
+  </g>
+
+  <g transform="translate(235 720)">
+    <rect width="1130" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="28" y="26" width="156" height="44" rx="8" fill="#0f766e"/>
+    <text class="badge" x="58" y="54">Local samples</text>
+    <rect x="210" y="26" width="178" height="44" rx="8" fill="#1d4ed8"/>
+    <text class="badge" x="240" y="54">Static analysis</text>
+    <rect x="414" y="26" width="218" height="44" rx="8" fill="#475569"/>
+    <text class="badge" x="445" y="54">Review prompts only</text>
+    <text class="body" x="664" y="54">Findings guide human review; they are not policy decisions.</text>
+  </g>
+</svg>

@@ -102,3 +102,21 @@ It exposes a read-only local index over:
 Generation remains in the CLI scripts for v0.5.0. The MCP server only lists and reads existing local files, using repository-root path confinement, hidden-path rejection, UTF-8 validation, and file-size limits before returning content.
 
 The MCP layer does not execute commands, connect to cloud accounts, contact Kubernetes API servers, call CI APIs, or change plugin behavior. Any future integration with cloud, cluster, CI/CD, or model registry systems should require explicit configuration and safe authentication boundaries.
+
+## Stable Release Posture
+
+The v1.0.0 release is a stable local-first workflow release. It consolidates the implemented v0.1.0 through v0.5.0 capabilities without expanding into live production-system integrations.
+
+Release readiness is documented through:
+
+- `docs/RELEASE_CHECKLIST.md`
+- `docs/UPGRADE.md`
+- `docs/ROADMAP.md`
+
+The stable release contract is:
+
+- local scripts remain the generation surface
+- MCP remains optional and read-only
+- examples remain generic fixtures
+- generated commands remain documentation only
+- app integration remains out of scope until a future feature spec introduces it
